@@ -1094,7 +1094,7 @@
           "Adresseerbaar object"
         ],
         "summary": "vindt verblijfsobjecten, ligplaatsen, standplaatsen",
-        "description": "Zoek actuele adresseerbare objecten (verblijfsobjecten, standplaatsen of ligplaatsen) met:\n1. een nummeraanduidingidentificatie of\n2. een pandidentificatie of\n \n3. een status geconstateerd in combinatie met woonplaats identificatie aangevuld met type en één of meer gebruiksdoelen of\n4. een geometrische contour (rechthoek) in combinatie met status geconstateerd, oppervlakte, gebruiksdoel en/of type.\n\nGebruik de fields-parameter als je alleen specifieke velden in het antwoord wil zien, zie  [functionele specificaties fields-parameter](https://github.com/VNG-Realisatie/Haal-Centraal-common/blob/v1.3.0/features/fields.feature). \nGebruik de expand-parameter als je het antwoord wil uitbreiden met (delen van) de gerelateerde resources adres en pand, zie  [functionele specificaties expand-parameter](https://github.com/VNG-Realisatie/Haal-Centraal-common/blob/v1.3.0/features/expand.feature).",
+        "description": "Zoek actuele adresseerbare objecten (verblijfsobjecten, standplaatsen of ligplaatsen) met:\n1. een nummeraanduidingidentificatie of\n2. een pandidentificatie of\n \n3. een status geconstateerd in combinatie met woonplaats identificatie aangevuld met type en één of meer gebruiksdoelen of\n4. een geometrische contour (rechthoek) in combinatie met status geconstateerd, oppervlakte, gebruiksdoel en/of type of\n5. een lijst met pandidentificaties.\n\nGebruik de fields-parameter als je alleen specifieke velden in het antwoord wil zien, zie  [functionele specificaties fields-parameter](https://github.com/VNG-Realisatie/Haal-Centraal-common/blob/v1.3.0/features/fields.feature). \nGebruik de expand-parameter als je het antwoord wil uitbreiden met (delen van) de gerelateerde resources adres en pand, zie  [functionele specificaties expand-parameter](https://github.com/VNG-Realisatie/Haal-Centraal-common/blob/v1.3.0/features/expand.feature).",
         "operationId": "raadpleegAdresseerbareobjecten",
         "parameters": [
           {
@@ -1234,6 +1234,12 @@
               "maxItems": 6,
               "minItems": 4,
               "type": "array",
+              "example": [
+                196733.51,
+                439931.89,
+                196833.51,
+                440031.89
+              ],
               "items": {
                 "type": "number"
               }
@@ -1248,6 +1254,25 @@
             "explode": true,
             "schema": {
               "$ref": "#/components/schemas/IntegerFilter"
+            }
+          },
+          {
+            "name": "pandIdentificaties",
+            "in": "query",
+            "description": "Een lijst met identificaties van panden uit de BAG.",
+            "required": false,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "minItems": 1,
+              "type": "array",
+              "example": [
+                "0226100000008856"
+              ],
+              "items": {
+                "pattern": "^[0-9]{16}$",
+                "type": "string"
+              }
             }
           }
         ],
@@ -2573,7 +2598,6 @@
                 196733.51,
                 439931.89
               ],
-              "deprecated": true,
               "items": {
                 "type": "number"
               }
@@ -2617,6 +2641,12 @@
               "maxItems": 6,
               "minItems": 4,
               "type": "array",
+              "example": [
+                196733.51,
+                439931.89,
+                196833.51,
+                440031.89
+              ],
               "items": {
                 "type": "number"
               }
@@ -2941,6 +2971,7 @@
         "description": "Resultaten als lijst."
       },
       "IntegerFilter": {
+        "type": "object",
         "properties": {
           "min": {
             "type": "integer"
@@ -3032,9 +3063,11 @@
               "pandIdentificaties": {
                 "type": "array",
                 "description": "Identificatie(s) van het pand of de panden waar het verblijfsobject deel van is.",
+                "example": [
+                  "0226100000008856"
+                ],
                 "items": {
-                  "type": "string",
-                  "example": "0226100000008856"
+                  "type": "string"
                 }
               },
               "isNevenadres": {
@@ -3229,9 +3262,11 @@
           "pandIdentificaties": {
             "type": "array",
             "description": "Identificatie(s) van het pand of de panden waar het verblijfsobject deel van is.",
+            "example": [
+              "0226100000008856"
+            ],
             "items": {
-              "type": "string",
-              "example": "0226100000008856"
+              "type": "string"
             }
           },
           "nummeraanduidingIdentificaties": {
@@ -3789,9 +3824,11 @@
           },
           "adresseerbaarObjectIdentificaties": {
             "type": "array",
+            "example": [
+              "0226010000038820"
+            ],
             "items": {
-              "type": "string",
-              "example": "0226010000038820"
+              "type": "string"
             }
           },
           "nummeraanduidingIdentificaties": {
@@ -4270,7 +4307,6 @@
             196733.51,
             439931.89
           ],
-          "deprecated": true,
           "items": {
             "type": "number"
           }
@@ -4414,8 +4450,33 @@
           "maxItems": 6,
           "minItems": 4,
           "type": "array",
+          "example": [
+            196733.51,
+            439931.89,
+            196833.51,
+            440031.89
+          ],
           "items": {
             "type": "number"
+          }
+        }
+      },
+      "pandIdentificaties": {
+        "name": "pandIdentificaties",
+        "in": "query",
+        "description": "Een lijst met identificaties van panden uit de BAG.",
+        "required": false,
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "minItems": 1,
+          "type": "array",
+          "example": [
+            "0226100000008856"
+          ],
+          "items": {
+            "pattern": "^[0-9]{16}$",
+            "type": "string"
           }
         }
       },
